@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Aop.Api.Parser;
+﻿using Aop.Api.Parser;
 using Aop.Api.Request;
 using Aop.Api.Util;
-using System.Text;
-using System.Web;
-
-using System.IO;
-using System.Net;
-
-using System.Xml;
 using Jayrock.Json;
 using Jayrock.Json.Conversion;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Web;
 
 namespace Aop.Api
 {
@@ -41,27 +35,27 @@ namespace Aop.Api
 
         private string version;
         private string format;
-        private string serverUrl;
-        private string appId;
-        private string privateKeyPem;
-        private string signType = "RSA";
+        private readonly string serverUrl;
+        private readonly string privateKeyPem;
+        private readonly string signType = "RSA";
         private string charset;
-        private string alipayPublicKey;
-        private bool keyFromFile = false;
-        private string httpmethod;
+        private readonly string alipayPublicKey;
+        private readonly bool keyFromFile = false;
         public string return_url;
 
         public string notify_url;
-        private string encyptKey;
-        private string encyptType = "AES";
+        private readonly string encyptKey;
+        private readonly string encyptType = "AES";
 
-        private WebUtils webUtils;
+        private readonly WebUtils webUtils;
 
-        public string Version
+        public string GetVersion()
         {
-            get { return version != null ? version : "1.0"; }
-            set { version = value; }
+            return version ?? "1.0";
         }
+
+        public void SetVersion(string value)
+        { version = value; }
 
         public string Format
         {
@@ -69,17 +63,13 @@ namespace Aop.Api
             set { format = value; }
         }
 
-        public string AppId
-        {
-            get { return appId; }
-            set { appId = value; }
-        }
+        public string AppId { get; set; }
 
         #region DefaultAopClient Constructors
 
         public DefaultAopClient(string serverUrl, string appId, string privateKeyPem)
         {
-            this.appId = appId;
+            this.AppId = appId;
             this.privateKeyPem = privateKeyPem;
             this.serverUrl = serverUrl;
             this.webUtils = new WebUtils();
@@ -87,7 +77,7 @@ namespace Aop.Api
 
         public DefaultAopClient(string serverUrl, string appId, string privateKeyPem, bool keyFromFile)
         {
-            this.appId = appId;
+            this.AppId = appId;
             this.privateKeyPem = privateKeyPem;
             this.serverUrl = serverUrl;
             this.keyFromFile = keyFromFile;
@@ -96,7 +86,7 @@ namespace Aop.Api
 
         public DefaultAopClient(string serverUrl, string appId, string privateKeyPem, string format)
         {
-            this.appId = appId;
+            this.AppId = appId;
             this.privateKeyPem = privateKeyPem;
             this.serverUrl = serverUrl;
             this.format = format;
@@ -188,7 +178,7 @@ namespace Aop.Api
             }
             else
             {
-                apiVersion = Version;
+                apiVersion = GetVersion();
             }
 
             AopDictionary txtParams = new AopDictionary(request.GetParameters());
@@ -203,7 +193,7 @@ namespace Aop.Api
             //AopDictionary txtParams = new AopDictionary(request.GetParameters());
             txtParams.Add(METHOD, request.GetApiName());
             txtParams.Add(VERSION, apiVersion);
-            txtParams.Add(APP_ID, appId);
+            txtParams.Add(APP_ID, AppId);
             txtParams.Add(FORMAT, format);
             txtParams.Add(TIMESTAMP, DateTime.Now);
             txtParams.Add(ACCESS_TOKEN, accessToken);
@@ -298,7 +288,7 @@ namespace Aop.Api
             }
             else
             {
-                apiVersion = Version;
+                apiVersion = GetVersion();
             }
 
             // 添加协议级请求参数
@@ -309,7 +299,7 @@ namespace Aop.Api
 
             txtParams.Add(METHOD, request.GetApiName());
             txtParams.Add(VERSION, apiVersion);
-            txtParams.Add(APP_ID, appId);
+            txtParams.Add(APP_ID, AppId);
             txtParams.Add(FORMAT, format);
             txtParams.Add(TIMESTAMP, DateTime.Now);
             txtParams.Add(ACCESS_TOKEN, accessToken);
@@ -603,12 +593,12 @@ namespace Aop.Api
 
             // 获取参数
             String charset = String.IsNullOrEmpty(this.charset) ? "utf-8" : this.charset;
-            String apiVersion = String.IsNullOrEmpty(request.GetApiVersion()) ? this.Version : request.GetApiVersion();
+            String apiVersion = String.IsNullOrEmpty(request.GetApiVersion()) ? this.GetVersion() : request.GetApiVersion();
 
             // 添加协议级请求参数，为空的参数后面会自动过滤，这里不做处理。
             result.Add(METHOD, request.GetApiName());
             result.Add(VERSION, apiVersion);
-            result.Add(APP_ID, appId);
+            result.Add(APP_ID, AppId);
             result.Add(FORMAT, format);
             result.Add(TIMESTAMP, DateTime.Now);
             result.Add(ACCESS_TOKEN, accessToken);
