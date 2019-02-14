@@ -98,10 +98,12 @@ namespace Aop.Api.Request
 
         public IDictionary<string, string> GetParameters()
         {
-            AopDictionary parameters = new AopDictionary();
-            parameters.Add("code", this.Code);
-            parameters.Add("grant_type", this.GrantType);
-            parameters.Add("refresh_token", this.RefreshToken);
+            AopDictionary parameters = new AopDictionary
+            {
+                { "code", this.Code },
+                { "grant_type", this.GrantType },
+                { "refresh_token", this.RefreshToken }
+            };
             return parameters;
         }
 

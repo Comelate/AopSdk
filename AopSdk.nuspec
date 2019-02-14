@@ -7,11 +7,11 @@
     <authors>$author$</authors>
     <owners>$author$</owners>
     <licenseUrl>https://render.alipay.com/p/f/fd-iztow1fi/index.html</licenseUrl>
-    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
+    <projectUrl>https://github.com/Comelate/AopSdk</projectUrl>
     <iconUrl>https://i.alipayobjects.com/common/favicon/favicon.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <releaseNotes>alipay sdk.</releaseNotes>
     <copyright>Copyright 2019</copyright>
     <tags>alipay</tags>
   </metadata>

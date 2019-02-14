@@ -107,7 +107,7 @@ namespace Aop.Api.Test
                             + "</Articles>" + "<Push><![CDATA[false]]></Push>" + "</XML>";
             string publicKeyPem = GetCurrentPath() + "public-key.pem";
             string privateKeyPem = GetCurrentPath() + "aop-sandbox-RSA-private-c#.pem";
-            string responseContent = AlipaySignature.encryptAndSign(bizContent, publicKeyPem, privateKeyPem,"UTF-8",true,true);
+            string responseContent = AlipaySignature.EncryptAndSign(bizContent, publicKeyPem, privateKeyPem,"UTF-8",true,true);
             System.Console.Write("resultContent=" + responseContent + "\n\r");
         }
     }

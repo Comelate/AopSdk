@@ -89,8 +89,10 @@ namespace Aop.Api.Request
 
         public IDictionary<string, string> GetParameters()
         {
-            AopDictionary parameters = new AopDictionary();
-            parameters.Add("biz_content", this.BizContent);
+            AopDictionary parameters = new AopDictionary
+            {
+                { "biz_content", this.BizContent }
+            };
             return parameters;
         }
 
